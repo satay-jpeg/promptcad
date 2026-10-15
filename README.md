@@ -1,6 +1,6 @@
 # PromptCAD
 
-A tiny, independent learning prototype that maps a limited natural-language prompt to editable parametric OpenSCAD source. It is **not** a Meshy clone, a learned 3D model, or a general-purpose CAD system: it uses transparent rules and primitive geometry, with no external model/API, copied assets, weights, or Meshy branding.
+A small, independent learning project that turns a constrained natural-language description into editable parametric OpenSCAD source. It is **not** a Meshy clone, a learned 3D model, or a general-purpose CAD system: it uses transparent rules and primitive geometry, with no external model/API, copied assets, weights, or Meshy branding.
 
 ## Try it
 
@@ -22,9 +22,13 @@ Open the `.scad` file in [OpenSCAD](https://openscad.org/) to preview, edit, and
 
 Dimensions are millimetres by convention. Defaults are width=30, depth=20, height=10; sphere radius=10; cylinder radius=10, height=20, wall=2. This is a parser with keyword defaults, not semantic AI; unsupported requests fall back to a box. Inspect every generated dimension and shape.
 
-## How this relates to text-to-3D products
+## REA-assisted product investigation (public marketing page only)
 
-A commercial text-to-3D service typically combines a prompt interface, learned generative models that predict geometry (often mesh topology and surface appearance), post-processing/retopology, preview, and export. Its proprietary model architecture and training data are not disclosed by the product page, so this repo does not claim to reproduce them. Our intentionally simpler route is: prompt → keyword/dimension extraction → parametric OpenSCAD primitive → user opens/exports it. This makes the geometry understandable and editable, but much less expressive.
+REA is the independent, MIT-licensed reverse-engineering toolkit at [morluto/rea](https://github.com/morluto/rea). I built REA locally and used `inspect-web-page` against a separately launched Chrome page for Meshy's public text-to-3D feature page. REA returned structured evidence including the page title/URL, accessibility tree and page text; Evidence ID: `ev_7c327c391a82da24f13c2b55d9400f1648b7157938cc9ae93e0ef132d79063fc`. The evidence was filtered to the Meshy origin. The exact observation boundaries and source links are in [`research/rea-meshy-observation.md`](research/rea-meshy-observation.md).
+
+From the page's claims and accessible public text, the visible workflow is describe an object → generate → inspect/iterate → download. The page advertises configurable generation, a viewer with wireframe/statistics/printability checks, refinement tools, and export formats. These are **product-page claims**, not independently verified behavior. The page does not disclose model architecture, training data, or internal generation algorithm; we did not inspect or access authenticated generation internals. REA was used for authorized, passive observation; no account, generation request, or private endpoint was accessed.
+
+PromptCAD borrows only this high-level product workflow, not Meshy's implementation: prompt → deterministic shape/parameter parsing → editable OpenSCAD → user-side preview/refinement/export. Unlike a learned 3D model, it produces simple parameterized solids only. The architectural distinction is central: REA explains observable software behavior; it does not magically recover source or proprietary model internals.
 
 ## Legal / safety boundaries
 
